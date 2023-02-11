@@ -1,41 +1,43 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using hrolgarUllr.Editor.GUI;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.Requests;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using static System.IO.Path;
 using static System.IO.Directory;
 using static UnityEngine.Application;
 using static UnityEditor.AssetDatabase;
 using PackageInfo = UnityEditor.PackageManager.PackageInfo;
+using static hrolgarUllr.Editor.GUI.TextInputPrompt;
 
 namespace hrolgarUllr.Editor
 {
     public static class ToolsMenu
     {
-        [MenuItem("HrolTools/Setup/Initialize EditorPrefs")]
-        static void InitializeEditorPrefs()
-        {
-            if (!EditorPrefs.HasKey("EditorPrefsInitialized"))
-            {
-                string rootNamespace = EditorUtility.PromptForSaveFile("Enter Root Namespace", "", "RootNamespace", "Enter the root namespace for this project:");
-                if (!string.IsNullOrEmpty(rootNamespace))
-                {
-                    // Set the root namespace
-                    EditorPrefs.SetString("ProjectSettings.RootNamespace", rootNamespace);
-                    EditorPrefs.SetInt("EditorPrefsInitialized", 1);
-
-                    // You can add more preferences to set here as needed
-                }
-            }
-            else
-            {
-                Debug.Log("EditorPrefs have already been initialized.");
-            }
-        }
+        // [MenuItem("HrolTools/Setup/Initialize EditorPrefs")]
+        // static void InitializeEditorPrefs()
+        // {
+        //     if (!EditorPrefs.HasKey("EditorPrefsInitialized"))
+        //     {
+        //         var rootNamespace = Prompt("Root Namespace", "", "Enter the root namespace for your project.");
+        //         Debug.Log(rootNamespace);
+        //         // if (!string.IsNullOrEmpty(rootNamespace))
+        //         // {
+        //         //     // Set the root namespace
+        //         //     EditorPrefs.SetString("ProjectSettings.RootNamespace", rootNamespace);
+        //         //     EditorPrefs.SetInt("EditorPrefsInitialized", 1);
+        //         //
+        //         //     // You can add more preferences to set here as needed
+        //         // }
+        //     }
+        //     else
+        //     {
+        //         Debug.Log("EditorPrefs have already been initialized.");
+        //     }
+        // }
 
         // [MenuItem("HrolTools/Setup/Test")]
         //
@@ -119,5 +121,7 @@ namespace hrolgarUllr.Editor
             }
             EditorApplication.update -= Progress;
         }
+        
+        // Make a popup window with a input for string
     }
 }
