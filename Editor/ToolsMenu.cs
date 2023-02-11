@@ -16,6 +16,26 @@ namespace hrolgarUllr.Editor
 {
     public static class ToolsMenu
     {
+        [MenuItem("HrolTools/Setup/Initialize EditorPrefs")]
+        static void InitializeEditorPrefs()
+        {
+            if (!EditorPrefs.HasKey("EditorPrefsInitialized"))
+            {
+                string rootNamespace = EditorUtility.PromptForSaveFile("Enter Root Namespace", "", "RootNamespace", "Enter the root namespace for this project:");
+                if (!string.IsNullOrEmpty(rootNamespace))
+                {
+                    // Set the root namespace
+                    EditorPrefs.SetString("ProjectSettings.RootNamespace", rootNamespace);
+                    EditorPrefs.SetInt("EditorPrefsInitialized", 1);
+
+                    // You can add more preferences to set here as needed
+                }
+            }
+            else
+            {
+                Debug.Log("EditorPrefs have already been initialized.");
+            }
+        }
 
         // [MenuItem("HrolTools/Setup/Test")]
         //
