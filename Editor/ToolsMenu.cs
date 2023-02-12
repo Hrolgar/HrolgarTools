@@ -17,27 +17,26 @@ namespace hrolgarUllr.Editor
 {
     public static class ToolsMenu
     {
-        // [MenuItem("HrolTools/Setup/Initialize EditorPrefs")]
-        // static void InitializeEditorPrefs()
-        // {
-        //     if (!EditorPrefs.HasKey("EditorPrefsInitialized"))
-        //     {
-        //         var rootNamespace = Prompt("Root Namespace", "", "Enter the root namespace for your project.");
-        //         Debug.Log(rootNamespace);
-        //         // if (!string.IsNullOrEmpty(rootNamespace))
-        //         // {
-        //         //     // Set the root namespace
-        //         //     EditorPrefs.SetString("ProjectSettings.RootNamespace", rootNamespace);
-        //         //     EditorPrefs.SetInt("EditorPrefsInitialized", 1);
-        //         //
-        //         //     // You can add more preferences to set here as needed
-        //         // }
-        //     }
-        //     else
-        //     {
-        //         Debug.Log("EditorPrefs have already been initialized.");
-        //     }
-        // }
+        [MenuItem("HrolTools/Setup/Initialize EditorPrefs")]
+        static void InitializeEditorPrefs()
+        {
+            // if (!EditorPrefs.HasKey("EditorPrefsInitialized"))
+            // {
+                Prompt(
+                    "Enter your root namespace",
+                    "RootNamespace",
+                    root =>
+                    {
+                        if (string.IsNullOrEmpty(root)) return;
+                        EditorPrefs.SetString("ProjectSettings.RootNamespace", root);
+                        EditorPrefs.SetInt("EditorPrefsInitialized", 1);
+                    });
+            // }
+            // else
+            // {
+                // Debug.Log("EditorPrefs have already been initialized.");
+            // }
+        }
 
         // [MenuItem("HrolTools/Setup/Test")]
         //
@@ -50,23 +49,33 @@ namespace hrolgarUllr.Editor
         {
             var allFolders = new Dictionary<string, Dictionary<string, List<string>>>
             {
-                {"_Project", new Dictionary<string, List<string>>
                 {
-                    {"_Code", new List<string>
-                        {"_Scripts", "Editor", "Shaders"}},
-                    {"Art", new List<string>
-                        {"Materials", "Models", "Textures"}},
-                    {"Audio", new List<string>
-                        {"Music", "Sound"}},
-                    {"Level", new List<string>
-                        {"_Prefabs", "_Scenes"}}
-                }}
+                    "_Project", new Dictionary<string, List<string>>
+                    {
+                        {
+                            "_Code", new List<string>
+                                { "_Scripts", "Editor", "Shaders" }
+                        },
+                        {
+                            "Art", new List<string>
+                                { "Materials", "Models", "Textures" }
+                        },
+                        {
+                            "Audio", new List<string>
+                                { "Music", "Sound" }
+                        },
+                        {
+                            "Level", new List<string>
+                                { "_Prefabs", "_Scenes" }
+                        }
+                    }
+                }
             };
             DirWithDict(allFolders);
             Refresh();
         }
-        
-        public static void DirWithDict(Dictionary<string, Dictionary<string, List<string>>> allFolders)
+
+        public static void DirWithDict (Dictionary<string, Dictionary<string, List<string>>> allFolders)
         {
             foreach (var folder in allFolders)
             {
@@ -79,7 +88,7 @@ namespace hrolgarUllr.Editor
                 }
             }
         }
-        
+
         private static AddAndRemoveRequest _requests;
         private static string[] _packages = { "com.unity.cinemachine" };
         [MenuItem("HrolTools/Setup/Download Assets")]
@@ -92,12 +101,12 @@ namespace hrolgarUllr.Editor
                 _packages = _packages?.Where(v => v != a).ToArray();
                 Debug.Log($"{package} is already installed.");
             }
-            
+
             if (_packages?.Length < 1) return;
             _requests = Client.AddAndRemove(_packages);
             EditorApplication.update += Progress;
-            
-            if(!File.Exists("Assets/TextMesh Pro/Resources/TMP Settings.asset"))
+
+            if (!File.Exists("Assets/TextMesh Pro/Resources/TMP Settings.asset"))
                 ImportPackage("Packages/com.unity.textmeshpro/Package Resources/TMP Essential Resources.unitypackage", false);
             Refresh();
         }
@@ -109,7 +118,7 @@ namespace hrolgarUllr.Editor
             {
                 foreach (var request in _requests.Result)
                 {
-                    if(PackageInfo.GetAllRegisteredPackages().All(p => p.name != request.name) && _packages.Any(p => p == request.name))
+                    if (PackageInfo.GetAllRegisteredPackages().All(p => p.name != request.name) && _packages.Any(p => p == request.name))
                     {
                         Debug.Log($"Successfully installed {request.displayName}, version {request.version}");
                     }
@@ -121,7 +130,7 @@ namespace hrolgarUllr.Editor
             }
             EditorApplication.update -= Progress;
         }
-        
+
         // Make a popup window with a input for string
     }
 }
