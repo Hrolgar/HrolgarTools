@@ -16,21 +16,26 @@ namespace hrolgarUllr.Editor
 {
     public static class ToolsMenu
     {
+        [MenuItem("HrolTools/Reset Project")]
+        private static void ResetPrefs() => EditorPrefs.SetInt("EditorPrefsInitializedProject", 0);
+
         [MenuItem("HrolTools/Setup/Initialize Project", true)]
-        private static bool ValidateInitializeEditorPrefs() => EditorPrefs.GetInt("EditorPrefsInitialized") != 1;
-        
+        private static bool ValidateInitializeProject() => EditorPrefs.GetInt("EditorPrefsInitializedProject") != 1;
+
         [MenuItem("HrolTools/Setup/Initialize Project")]
-        private static void InitializeEditorPrefs()
+        private static void InitializeProject()
         {
-            if(EditorPrefs.GetInt("EditorPrefsInitialized") == 1) return;
-            Prompt("Enter your root namespace", "RootNamespace", root =>
+            Prompt(
+                "Enter your root namespace",
+                "RootNamespace",
+                root =>
                 {
                     if (string.IsNullOrEmpty(root)) return;
                     EditorSettings.projectGenerationRootNamespace = root;
-                    EditorPrefs.SetInt("EditorPrefsInitialized", 1);
+                    EditorPrefs.SetInt("EditorPrefsInitializedProject", 1);
+                    
+                    CreateDefaultFolders();
                 });
-            
-            CreateDefaultFolders();
         }
 
         // [MenuItem("HrolTools/Setup/Test")]
