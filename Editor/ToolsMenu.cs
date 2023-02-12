@@ -17,25 +17,23 @@ namespace hrolgarUllr.Editor
 {
     public static class ToolsMenu
     {
-        [MenuItem("HrolTools/Setup/Initialize EditorPrefs")]
+        [MenuItem("HrolTools/Setup/Initialize EditorPrefs", true)]
+        private static bool InitializeEditorPrefsValidation() => !EditorPrefs.HasKey("EditorPrefsInitialized");
+        
+        [MenuItem("HrolTools/Setup/Initialize EditorPrefs", false ,0)]
         static void InitializeEditorPrefs()
         {
-            // if (!EditorPrefs.HasKey("EditorPrefsInitialized"))
-            // {
-                Prompt(
-                    "Enter your root namespace",
-                    "RootNamespace",
-                    root =>
-                    {
-                        if (string.IsNullOrEmpty(root)) return;
-                        EditorPrefs.SetString("ProjectSettings.RootNamespace", root);
-                        EditorPrefs.SetInt("EditorPrefsInitialized", 1);
-                    });
-            // }
-            // else
-            // {
-                // Debug.Log("EditorPrefs have already been initialized.");
-            // }
+            Prompt(
+                "Enter your root namespace",
+                "RootNamespace",
+                root =>
+                {
+                    if (string.IsNullOrEmpty(root)) return;
+                    EditorSettings.projectGenerationRootNamespace = root;
+                    EditorPrefs.SetInt("EditorPrefsInitialized", 1);
+                });
+            
+            CreateDefaultFolders();
         }
 
         // [MenuItem("HrolTools/Setup/Test")]
@@ -44,7 +42,7 @@ namespace hrolgarUllr.Editor
         // {
         //     var a = AssetImporter.GetAtPath("Assets/HrolTools/Setup/Test.prefab");
         // }
-        [MenuItem("HrolTools/Setup/Create Default Folders")]
+        // [MenuItem("HrolTools/Setup/Create Default Folders")]
         public static void CreateDefaultFolders()
         {
             var allFolders = new Dictionary<string, Dictionary<string, List<string>>>
