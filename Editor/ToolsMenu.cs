@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using hrolgarUllr.Editor.GUI;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.Requests;
@@ -17,16 +16,14 @@ namespace hrolgarUllr.Editor
 {
     public static class ToolsMenu
     {
-        [MenuItem("HrolTools/Setup/Initialize EditorPrefs", true)]
-        private static bool InitializeEditorPrefsValidation() => !EditorPrefs.HasKey("EditorPrefsInitialized");
+        [MenuItem("HrolTools/Setup/Initialize Project", true)]
+        private static bool ValidateInitializeEditorPrefs() => EditorPrefs.GetInt("EditorPrefsInitialized") != 1;
         
-        [MenuItem("HrolTools/Setup/Initialize EditorPrefs", false ,0)]
-        static void InitializeEditorPrefs()
+        [MenuItem("HrolTools/Setup/Initialize Project")]
+        private static void InitializeEditorPrefs()
         {
-            Prompt(
-                "Enter your root namespace",
-                "RootNamespace",
-                root =>
+            if(EditorPrefs.GetInt("EditorPrefsInitialized") == 1) return;
+            Prompt("Enter your root namespace", "RootNamespace", root =>
                 {
                     if (string.IsNullOrEmpty(root)) return;
                     EditorSettings.projectGenerationRootNamespace = root;
