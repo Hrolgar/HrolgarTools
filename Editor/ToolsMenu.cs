@@ -37,14 +37,7 @@ namespace hrolgarUllr.Editor
                     CreateDefaultFolders();
                 });
         }
-
-        // [MenuItem("HrolTools/Setup/Test")]
-        //
-        // public static void Test()
-        // {
-        //     var a = AssetImporter.GetAtPath("Assets/HrolTools/Setup/Test.prefab");
-        // }
-        // [MenuItem("HrolTools/Setup/Create Default Folders")]
+        
         public static void CreateDefaultFolders()
         {
             var allFolders = new Dictionary<string, Dictionary<string, List<string>>>
@@ -91,6 +84,7 @@ namespace hrolgarUllr.Editor
 
         private static AddAndRemoveRequest _requests;
         private static string[] _packages = { "com.unity.cinemachine" };
+        
         [MenuItem("HrolTools/Setup/Download Assets")]
         public static void DownloadAssets()
         {
@@ -130,7 +124,5 @@ namespace hrolgarUllr.Editor
             }
             EditorApplication.update -= Progress;
         }
-
-        // Make a popup window with a input for string
     }
 }
