@@ -30,6 +30,9 @@ namespace hrolgarUllr.ExtensionMethods
         public static Vector2 DistanceBetween(this Vector2 vector2, Vector2 otherVector2) => otherVector2 - vector2;
         public static Vector3 DistanceBetween(this Vector3 vector3, Vector3 otherVector3) => otherVector3 - vector3;
         
+        public static Vector3 Flat(this Vector3 vector3) => new(vector3.x, 0, vector3.z);
+        public static Vector3 ToVector3Int(this Vector3 vector3) => new Vector3Int((int) vector3.x, (int) vector3.y, (int) vector3.z);
+        
         public static Vector2 GetClosestVector2(this Vector2 vector2, IEnumerable<Vector2> otherVectors)
         {
             var array = otherVectors.ToArray();
