@@ -1,4 +1,4 @@
-# Hrolgar's Tools
+# Hrolgar Tools
 This repository contains a collection of tools and utilities created by HrolgarUllr.
 
 ### Requirements
