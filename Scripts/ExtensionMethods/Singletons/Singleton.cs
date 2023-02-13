@@ -1,16 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine;
 
 namespace hrolgarUllr.ExtensionMethods.Singletons
 {
     /// <summary>
-    /// This is a singleton that takes in the MonoBehaviour
-    /// <code>
-    /// <example>
-    /// public class YourClass : SingletonMonoBehaviour<YourClass> 
-    /// </example>
-    /// </code>
+    /// This class is a singleton MonoBehaviour, which means that there can only be one instance of it in the scene.
     /// </summary>
+    /// <typeparam name="T">The class type of the singleton.</typeparam>
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     {
         public static T Instance { get; private set; }
@@ -18,7 +13,6 @@ namespace hrolgarUllr.ExtensionMethods.Singletons
         {
             if (Instance is not null)
                 Destroy(gameObject);
-
             Instance = this as T;
         }
     }
