@@ -16,5 +16,9 @@ namespace hrolgarUllr.Editor.CreateScripts
         [MenuItem("Assets/Create/Code/NewMonoBehaviour", priority = 40)]
         public static void CreateMonoBehaviour() => 
             ProjectWindowUtil.CreateScriptAssetFromTemplateFile(SetTemplatePath("MonoBehaviour.cs.txt"), "NewMono.cs");
+        
+        [MenuItem("Assets/Create/Code/ScriptableObject", priority = 40)]
+        public static void CreateScriptableObject() => 
+            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(SetTemplatePath("ScriptableObject.cs.txt"), "NewSO.cs");
     }
 }
